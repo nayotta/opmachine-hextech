@@ -1,0 +1,39 @@
+prod:
+  name: m1
+  service:
+    scheme: mtp+soda
+    host: 0.0.0.0
+    port: 13401
+  log:
+    level: debug
+  heartbeat:
+    interval: 15
+    strategy: auto
+  credential:
+    id: ""
+    secret: ""
+  service_endpoint:
+    device:
+      address: 127.0.0.1:5002
+      plain_text: true
+    default:
+      address:  api.dev.metathings.nayotta.com:443
+  backend:
+    name: http
+    host: 0.0.0.0
+    port: 8001
+    auth:
+      name: dummy
+    target:
+      url: http://127.0.0.1:8000
+    downstreams:
+      "index":
+        path: "/"
+      "move":
+        path: "/move"
+      "zoom":
+        path: "/zoom"
+      "open":
+        path: "/open"
+      "close":
+        path: "/close"

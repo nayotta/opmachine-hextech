@@ -1,0 +1,15 @@
+prod:
+  listen: 0.0.0.0:5002
+  verbose: true
+  log:
+    level: debug
+  credential:
+    # test
+    id: ""
+    secret: ""
+    domain: default
+  transport_credential:
+    plain_text: true
+  service_endpoint:
+    default:
+      address: api.dev.metathings.nayotta.com:443
