@@ -1,0 +1,8 @@
+ffmpeg4/
+ffmpeg5/
+images/inspect-slide-reset/runtime/inspect-slide-rest/
+images/inspect-slide-reset/runtime/meta/metathings
+images/inspect-slide-reset/runtime/meta/config/device.yaml
+images/inspect-slide-reset/runtime/meta/config/module.yaml
+*.copy
+

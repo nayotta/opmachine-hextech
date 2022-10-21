@@ -31,11 +31,11 @@ DEVICE_LISTEN_PORT=5002 ./run.sh ./config
 
 ```shell
 
-cd runtime/
+cd inspect-slide-reset
 
 docker pull ghcr.io/nayotta/op-hextech-python:3.10.7-slim
 
-docker run -d --restart always --name inspect-slide-reset-mixer -p 10980:8000 -v $PWD/inspect-slide-rest/entrypoint.sh:/entrypoint.sh -v $PWD/inspect-slide-rest:/workspace --entrypoint /entrypoint.sh ghcr.io/nayotta/op-hextech-python:3.10.7-slim
+docker run -d --restart always --name inspect-slide-reset-mixer -p 10980:8000 -v $PWD/runtime/entrypoint.sh:/entrypoint.sh -v $PWD/runtime:/workspace --entrypoint /entrypoint.sh ghcr.io/nayotta/op-hextech-python:3.10.7-slim
 
 
 curl -X POST http://127.0.0.1:10980/
