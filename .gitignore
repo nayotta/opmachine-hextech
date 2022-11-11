@@ -1,7 +1,8 @@
 ffmpeg4/
 ffmpeg5/
+images/inspect-slide-rest/runtime/etc/
 images/inspect-slide-rest/runtime/inspect-slide-rest/
-images/inspect-slide-rest/runtime/meta/metathings
+images/inspect-slide-rest/runtime/meta/metathings*
 images/inspect-slide-rest/runtime/meta/config/device.yaml
 images/inspect-slide-rest/runtime/meta/config/module.yaml
 *.copy
