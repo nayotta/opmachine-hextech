@@ -26,8 +26,11 @@ jobs:
           tagRegex: "v(.*)"
 
       - name: Prepare
+        env:
+          FREE_DISK_SCRIPT: https://github.com/apache/flink/blob/master/tools/azure-pipelines/free_disk_space.sh
         run: |
           mkdir -p dist
+          curl ${FREE_DISK_SCRIPT} | bash
 
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
