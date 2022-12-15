@@ -1,0 +1,57 @@
+name: build test
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  compile-amd64-and-upload-asset:
+    strategy:
+      matrix:
+        distro:
+          - ubuntu-20.04
+
+    runs-on: ${{ matrix.distro }}
+
+    steps:
+      - name: Pull The Repository
+        uses: actions/checkout@v3
+        with:
+          path: openmachine-hextech
+
+      - uses: little-core-labs/get-git-tag@v3.0.1
+        id: tagName
+        with:
+          tagRegex: "v(.*)"
+
+      - name: Build Arm
+        uses: pguyot/arm-runner-action@v2
+        with:
+          base_image: raspios_lite:latest
+          cpu: cortex-a7
+          cpu_info: raspberrypi_3b
+          copy_artifact_path: /opt/build-info.txt
+          copy_artifact_dest: dist/build-info.txt
+          commands:
+            uname -a >> /opt/build-info.txt
+            cat /proc/cpuinfo >> /opt/build-info.txt
+
+      - name: Check Artifact
+        env:
+          PROJECT_PACKAGE: openmachine-hextech
+          RUN_OS: linux
+          RUN_ARCH: armhf
+        run: |
+          TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
+          cat dist/build-info.txt
+          (cd dist; tar zcvf ../TAR_NAME build-info.txt)
+          sha1sum ${TAR_NAME} > ${TAR_NAME}.sha1
+          ls -l
+
+      - name: Upload Artifact Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            *.tar.gz
+            *.sha1
