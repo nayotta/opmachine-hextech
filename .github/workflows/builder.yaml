@@ -48,7 +48,7 @@ jobs:
         run: |
           TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
           cat dist/build-info.txt
-          (cd dist; tar zcvf ../TAR_NAME build-info.txt)
+          (cd dist; tar zcvf ../${TAR_NAME} build-info.txt)
           sha1sum ${TAR_NAME} > ${TAR_NAME}.sha1
           ls -l
 
