@@ -25,6 +25,10 @@ jobs:
         with:
           tagRegex: "v(.*)"
 
+      - name: Prepare
+        run: |
+          mkdir -p dist
+
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
         with:
