@@ -31,11 +31,13 @@ jobs:
 
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
+        env:
+          PYTHON_VERSION: 3.10.7
         with:
           base_image: raspios_lite:latest
           cpu: cortex-a7
-          copy_artifact_path: opt/build-info.txt
-          copy_artifact_dest: dist/build-info.txt
+          copy_artifact_path: opt/build-info.txt, opt/${PYTHON_VERSION}
+          copy_artifact_dest: dist/build-info.txt, dist/${PYTHON_VERSION}
           commands: |
             apt-get update
             apt-get install git curl \
@@ -48,9 +50,11 @@ jobs:
             eval "$(pyenv init -)"
             eval "$(pyenv virtualenv-init -)"
 
+            pyenv install -v ${PYTHON_VERSION}
+
             mkdir -p opt
-            pyenv --help |tee >> opt/build-info.txt
-            cat /proc/cpuinfo |tee >> opt/build-info.txt
+            mv ${PYENV_ROOT}/versions/${PYTHON_VERSION} opt/${PYTHON_VERSION}
+            pyenv versions |tee >> opt/build-info.txt
 
       - name: Check Artifact
         env:
