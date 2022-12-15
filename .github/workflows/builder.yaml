@@ -29,8 +29,8 @@ jobs:
         uses: pguyot/arm-runner-action@v2
         with:
           base_image: raspios_lite:latest
-          cpu: cortex-a7
-          cpu_info: raspberrypi_3b
+          # cpu: cortex-a7
+          # cpu_info: raspberrypi_3b
           copy_artifact_path: /opt/build-info.txt
           copy_artifact_dest: dist/build-info.txt
           commands:
