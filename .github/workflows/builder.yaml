@@ -32,6 +32,7 @@ jobs:
           sudo apt update
           sudo apt install tree -y
           mkdir -p dist
+          touch dist/hello.txt
           echo 'show'
           pwd
           ls -la
@@ -51,7 +52,7 @@ jobs:
             mkdir -p opt
             uname -a | tee >> dist/info.txt
             uname -a | tee >> opt/info.txt
-            ls -la dist/ opt/
+            ls -la dist/ opt/ openmachine-hextech/
             cat opt/info.txt
 
           # copy_artifact_path: opt/build-info.txt,opt/${PYTHON_VERSION}
