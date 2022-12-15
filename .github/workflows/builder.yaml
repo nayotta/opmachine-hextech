@@ -33,12 +33,19 @@ jobs:
         uses: pguyot/arm-runner-action@v2
         with:
           base_image: raspios_lite:latest
-          # cpu: cortex-a7
-          # cpu_info: raspberrypi_3b
+          cpu: cortex-a7
           copy_artifact_path: opt/build-info.txt
           copy_artifact_dest: dist/build-info.txt
-          commands:
-            mkdir -p opt && uname -a >> opt/build-info.txt && cat /proc/cpuinfo >> opt/build-info.txt
+          commands: |
+            apt update
+            apt install git curl
+            apt install build-essential libssl-dev zlib1g-dev \
+              libbz2-dev libreadline-dev libsqlite3-dev curl llvm \
+              libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev libsasl2-dev python3-dev libldap2-dev
+            curl https://pyenv.run | bash
+            mkdir -p opt
+            pyenv --help |tee >> opt/build-info.txt
+            cat /proc/cpuinfo |tee >> opt/build-info.txt
 
       - name: Check Artifact
         env:
