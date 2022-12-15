@@ -29,8 +29,8 @@ jobs:
         env:
           FREE_DISK_SCRIPT: https://raw.githubusercontent.com/apache/flink/master/tools/azure-pipelines/free_disk_space.sh
         run: |
-          apt update
-          apt install tree -y
+          sudo apt update
+          sudo apt install tree -y
           mkdir -p dist
           echo 'show'
           pwd
