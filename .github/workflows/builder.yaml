@@ -27,7 +27,7 @@ jobs:
 
       - name: Prepare
         env:
-          FREE_DISK_SCRIPT: https://github.com/apache/flink/blob/master/tools/azure-pipelines/free_disk_space.sh
+          FREE_DISK_SCRIPT: https://raw.githubusercontent.com/apache/flink/master/tools/azure-pipelines/free_disk_space.sh
         run: |
           mkdir -p dist
           curl ${FREE_DISK_SCRIPT} | bash
