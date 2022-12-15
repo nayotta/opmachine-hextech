@@ -51,7 +51,8 @@ jobs:
             mkdir -p opt
             uname -a | tee >> dist/info.txt
             uname -a | tee >> opt/info.txt
-            ls -la
+            ls -la dist/ opt/
+            cat opt/info.txt
 
           # copy_artifact_path: opt/build-info.txt,opt/${PYTHON_VERSION}
           # copy_artifact_dest: dist/build-info.txt,dist/${PYTHON_VERSION}
