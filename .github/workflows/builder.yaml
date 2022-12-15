@@ -38,10 +38,10 @@ jobs:
           copy_artifact_dest: dist/build-info.txt
           commands: |
             apt update
-            apt install git curl
+            apt install git curl -y
             apt install build-essential libssl-dev zlib1g-dev \
               libbz2-dev libreadline-dev libsqlite3-dev curl llvm \
-              libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev libsasl2-dev python3-dev libldap2-dev
+              libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev libsasl2-dev python3-dev libldap2-dev -y
             curl https://pyenv.run | bash
             mkdir -p opt
             pyenv --help |tee >> opt/build-info.txt
