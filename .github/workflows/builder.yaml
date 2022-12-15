@@ -34,8 +34,7 @@ jobs:
           copy_artifact_path: /opt/build-info.txt
           copy_artifact_dest: dist/build-info.txt
           commands:
-            uname -a >> /opt/build-info.txt
-            cat /proc/cpuinfo >> /opt/build-info.txt
+            uname -a >> /opt/build-info.txt && cat /proc/cpuinfo >> /opt/build-info.txt
 
       - name: Check Artifact
         env:
