@@ -29,10 +29,13 @@ jobs:
         env:
           FREE_DISK_SCRIPT: https://raw.githubusercontent.com/apache/flink/master/tools/azure-pipelines/free_disk_space.sh
         run: |
+          apt update
+          apt install tree -y
           mkdir -p dist
-          curl ${FREE_DISK_SCRIPT} | bash
+          echo 'show'
           pwd
           ls -la
+          tree -L 2 .
 
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
@@ -46,7 +49,9 @@ jobs:
             pwd
             ls -la
             mkdir -p opt
-            uname -a >> opt/info.txt
+            uname -a | tee >> dist/info.txt
+            uname -a | tee >> opt/info.txt
+            ls -la
 
           # copy_artifact_path: opt/build-info.txt,opt/${PYTHON_VERSION}
           # copy_artifact_dest: dist/build-info.txt,dist/${PYTHON_VERSION}
@@ -76,6 +81,7 @@ jobs:
         run: |
           pwd
           ls -la
+          tree -L 2 .
         # run: |
         #   TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
         #   cat dist/build-info.txt
