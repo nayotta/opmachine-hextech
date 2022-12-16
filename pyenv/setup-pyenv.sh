@@ -13,7 +13,6 @@ curl https://pyenv.run | bash
 
 # setup pyenv environment
 cat << EOF >> ${LOCAL_ENV}
-
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
