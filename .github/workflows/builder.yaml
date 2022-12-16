@@ -1,16 +1,23 @@
-name: build test
+name: build arm pyenv with python
 
 on:
   release:
     types:
       - created
+  push:
+    tags:
+      - pyenv-*
 
 jobs:
-  compile-amd64-and-upload-asset:
+  compile-arm-and-upload-asset:
     strategy:
       matrix:
         distro:
           - ubuntu-20.04
+        include:
+          - arm_cpu: cortex-a7
+            arm_base_images: raspios_lite:latest
+            python_version: 3.10.7
 
     runs-on: ${{ matrix.distro }}
 
@@ -25,50 +32,36 @@ jobs:
         with:
           tagRegex: "v(.*)"
 
+      # - name: Free Disk
+      #   env:
+      #     FREE_DISK_SCRIPT: https://raw.githubusercontent.com/apache/flink/master/tools/azure-pipelines/free_disk_space.sh
+      #   run: |
+      #     curl ${FREE_DISK_SCRIPT} | bash
+
       - name: Prepare
-        env:
-          FREE_DISK_SCRIPT: https://raw.githubusercontent.com/apache/flink/master/tools/azure-pipelines/free_disk_space.sh
         run: |
-          curl ${FREE_DISK_SCRIPT} | bash
           sudo apt update
           sudo apt install tree -y
           mkdir -p dist
-          touch dist/hello.txt
-          echo 'show'
           pwd
-          ls -la
           tree -L 2 .
 
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
         env:
-          PYTHON_VERSION: 3.10.7
+          PROJECT_NAME: opmachine-hextech/pyenv
+          PYTHON_VERSION: ${{ matrix.python_version}}
         with:
           image_additional_mb: 1024
-          base_image: raspios_lite:latest
-          cpu: cortex-a7
+          base_image: ${{ matrix.arm_base_images}}
+          cpu: ${{ matrix.arm_cpu}}
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
-            apt-get update
-            apt-get install git curl \
-              build-essential zlib1g-dev libffi-dev libssl-dev \
-              libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev \
-              libxml2-dev libxmlsec1-dev libxslt-dev -y
-            curl https://pyenv.run | bash
-            export PYENV_ROOT="$HOME/.pyenv"
-            command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-            eval "$(pyenv init -)"
-            eval "$(pyenv virtualenv-init -)"
-
-            pyenv install -v ${PYTHON_VERSION}
-
-            mkdir -p opt
-            ls -la
-            mv ${PYENV_ROOT}/versions/${PYTHON_VERSION} opt/${PYTHON_VERSION}
-            pyenv versions |tee >> opt/build-info.txt
-            pwd
-            ls -la dist/ opt/ openmachine-hextech/
+            ${PROJECT_NAME}/prepare.sh
+            ${PROJECT_NAME}/setup-pyenv.sh
+            ${PROJECT_NAME}/install-python.sh
+            ${PROJECT_NAME}/done.sh
 
       - name: Check Artifact
         env:
@@ -77,13 +70,11 @@ jobs:
           RUN_ARCH: armhf
         run: |
           pwd
-          ls -la
           tree -L 2 .
           TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
-          cat dist/opt/build-info.txt
           (cd dist; tar zcvf ../${TAR_NAME} opt)
           sha1sum ${TAR_NAME} > ${TAR_NAME}.sha1
-          ls -l
+          tree -L 2 .
 
       - name: Upload Artifact Asset
         uses: softprops/action-gh-release@v1
