@@ -20,5 +20,6 @@
 
 # pyenv which python
 
+tree -L 2 .
 echo ${PYTHON_VERSION}
 mv ${PYENV_ROOT} ${ARTIFACT_OPT}/pyenv
