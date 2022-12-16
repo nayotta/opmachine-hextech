@@ -22,4 +22,6 @@
 
 tree -L 2 .
 echo ${PYTHON_VERSION}
+echo ${PYENV_ROOT}
+echo ${ARTIFACT_OPT}
 mv ${PYENV_ROOT} ${ARTIFACT_OPT}/pyenv
