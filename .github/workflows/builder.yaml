@@ -63,6 +63,8 @@ jobs:
             ${PROJECT_NAME}/prepare.sh
             . ${LOCAL_ENV}
             echo "1:" ${ARTIFACT_OPT}
+            echo "2: start"
+            cat ${PROJECT_NAME}/setup-pyenv.sh
             ${PROJECT_NAME}/setup-pyenv.sh
             . ${LOCAL_ENV}
             echo "2:" ${ARTIFACT_OPT}
