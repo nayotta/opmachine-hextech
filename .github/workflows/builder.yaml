@@ -59,7 +59,7 @@ jobs:
           copy_artifact_dest: dist/opt
           commands: |
             touch ${LOCAL_ENV}
-            tree -L 2 .
+            ls -la
             ${PROJECT_NAME}/prepare.sh
             . ${LOCAL_ENV}
             echo "1:" ${ARTIFACT_OPT}
