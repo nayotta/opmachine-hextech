@@ -2,6 +2,9 @@
 
 mkdir -p opt
 
-echo "export ARTIFACT_OPT=${PWD}/opt" >> $HOME/.bashrc
+cat << EOF >> $HOME/.bashrc
+export ARTIFACT_OPT=${PWD}/opt
+EOF
+
 echo ${PWD}
 echo ${ARTIFACT_OPT}
