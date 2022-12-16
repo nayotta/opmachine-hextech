@@ -53,6 +53,7 @@ jobs:
           image_additional_mb: 1024
           base_image: ${{ matrix.arm_base_images}}
           cpu: ${{ matrix.arm_cpu}}
+          shell: /bin/bash
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
