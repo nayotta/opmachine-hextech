@@ -61,6 +61,7 @@ jobs:
             touch ${LOCAL_ENV}
             ls -la
             ${PROJECT_NAME}/prepare.sh
+            echo "1:start" ${ARTIFACT_OPT}
             . ${LOCAL_ENV}
             echo "1:" ${ARTIFACT_OPT}
             echo "2: start"
