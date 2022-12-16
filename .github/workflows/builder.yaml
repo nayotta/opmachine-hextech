@@ -68,6 +68,8 @@ jobs:
             echo "2:" ${ARTIFACT_OPT}
             ls -la
             cat ${LOCAL_ENV}
+            pyenv --help
+            echo "2: end"
             ${PROJECT_NAME}/install-python.sh
             echo "3:" ${ARTIFACT_OPT}
             ${PROJECT_NAME}/done.sh
