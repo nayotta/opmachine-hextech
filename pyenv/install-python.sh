@@ -19,6 +19,9 @@
 # deactivate
 
 # pyenv which python
+pyenv --help
+pyenv versions
+
 
 tree -L 2 .
 echo ${PYTHON_VERSION}
