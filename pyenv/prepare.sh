@@ -2,7 +2,7 @@
 
 mkdir -p opt
 
-cat << EOF >> $HOME/.bashrc
+cat << EOF >> ${LOCAL_ENV}
 export ARTIFACT_OPT=${PWD}/opt
 EOF
 

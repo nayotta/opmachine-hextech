@@ -47,23 +47,26 @@ jobs:
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
         env:
+          LOCAL_ENV: localenv
           PROJECT_NAME: ${{ matrix.repo_project_name }}/pyenv
           PYTHON_VERSION: ${{ matrix.python_version}}
         with:
           image_additional_mb: 1024
           base_image: ${{ matrix.arm_base_images}}
           cpu: ${{ matrix.arm_cpu}}
-          shell: /bin/bash
+          # shell: /bin/bash
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
+            touch ${LOCAL_ENV}
             ${PROJECT_NAME}/prepare.sh
-            source $HOME/.bashrc
+            . ${LOCAL_ENV}
             echo "1:" ${ARTIFACT_OPT}
             ${PROJECT_NAME}/setup-pyenv.sh
-            source $HOME/.bashrc
+            . ${LOCAL_ENV}
             echo "2:" ${ARTIFACT_OPT}
-            cat $HOME/.bashrc
+            ls -la
+            cat ${LOCAL_ENV}
             ${PROJECT_NAME}/install-python.sh
             echo "3:" ${ARTIFACT_OPT}
             ${PROJECT_NAME}/done.sh
