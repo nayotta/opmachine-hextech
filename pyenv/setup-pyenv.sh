@@ -15,7 +15,7 @@ echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ${L
 echo 'eval "$(pyenv init -)"' >> ${LOCAL_CACHE_ENV}
 echo 'eval "$(pyenv virtualenv-init -)"' >> ${LOCAL_CACHE_ENV}
 
-. ${LOCAL_ENV}
+. ${LOCAL_CACHE_ENV}
 
 pyenv --help
 
