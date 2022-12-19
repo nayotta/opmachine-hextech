@@ -47,6 +47,7 @@ jobs:
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
         env:
+          HOME: /home/pi
           LOCAL_ENV: .bashrc
           PROJECT_NAME: ${{ matrix.repo_project_name }}/pyenv
           PYTHON_VERSION: ${{ matrix.python_version}}
@@ -59,6 +60,7 @@ jobs:
           copy_artifact_dest: dist/opt
           commands: |
             ls -la /home
+            echo ${HOME}
             export LOCAL_ENV=${HOME}/${LOCAL_ENV}
             echo ${LOCAL_ENV}
             touch ${LOCAL_ENV}
