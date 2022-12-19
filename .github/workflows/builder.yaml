@@ -64,14 +64,14 @@ jobs:
             cat /etc/bash.bashrc
             echo ~/
             ls -l ~/
-            export LOCAL_ENV=${HOME}/${LOCAL_ENV}
+            export LOCAL_ENV=/etc/bash.bashrc
             ${PROJECT_NAME}/prepare.sh
-            . ${LOCAL_ENV}
+            # . ${LOCAL_ENV}
 
             ${PROJECT_NAME}/setup-pyenv.sh
-            . ${LOCAL_ENV}
+            # . ${LOCAL_ENV}
             cat ${LOCAL_ENV}
-            exec $SHELL
+            # exec $SHELL
 
             ${PROJECT_NAME}/install-python.sh
 
