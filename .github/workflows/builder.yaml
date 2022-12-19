@@ -137,8 +137,8 @@ jobs:
             pyenv versions
 
             # install python
-            # pyenv install -v ${PYTHON_VERSION}
-            # pyenv versions
+            pyenv install -v ${PYTHON_VERSION}
+            pyenv versions
 
             # copy pyenv
             mv ${PYENV_ROOT} ${ARTIFACT_OPT}/pyenv
