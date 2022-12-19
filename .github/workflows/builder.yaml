@@ -62,7 +62,6 @@ jobs:
             id
             group
             cat /etc/bash.bashrc
-            cat ~/.bash_profile
             export LOCAL_ENV=${HOME}/${LOCAL_ENV}
             ${PROJECT_NAME}/prepare.sh
             . ${LOCAL_ENV}
