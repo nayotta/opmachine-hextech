@@ -1,6 +1,8 @@
 #! /bin/bash
 
 # load env
+echo ${LOCAL_CACHE_ENV}
+cat ${LOCAL_CACHE_ENV}
 . ${LOCAL_CACHE_ENV}
 
 tree -L 2 .
