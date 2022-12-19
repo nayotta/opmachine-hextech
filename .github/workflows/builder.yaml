@@ -59,7 +59,6 @@ jobs:
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
-
             # ${PROJECT_NAME}/prepare.sh
 
             # ${PROJECT_NAME}/setup-pyenv.sh
