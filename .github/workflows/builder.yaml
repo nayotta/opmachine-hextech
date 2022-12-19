@@ -59,6 +59,7 @@ jobs:
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
+            cat ~/.bash_profile
             export LOCAL_ENV=${HOME}/${LOCAL_ENV}
             ${PROJECT_NAME}/prepare.sh
             . ${LOCAL_ENV}
@@ -66,6 +67,7 @@ jobs:
             ${PROJECT_NAME}/setup-pyenv.sh
             . ${LOCAL_ENV}
             cat ${LOCAL_ENV}
+            exec $SHELL
 
             ${PROJECT_NAME}/install-python.sh
 
