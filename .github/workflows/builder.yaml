@@ -60,15 +60,16 @@ jobs:
           copy_artifact_dest: dist/opt
           commands: |
             export LOCAL_ENV=${HOME}/${LOCAL_ENV}
-            bash ${PROJECT_NAME}/prepare.sh
+            ${PROJECT_NAME}/prepare.sh
             . ${LOCAL_ENV}
 
-            bash ${PROJECT_NAME}/setup-pyenv.sh
+            ${PROJECT_NAME}/setup-pyenv.sh
             . ${LOCAL_ENV}
+            cat ${LOCAL_ENV}
 
-            bash ${PROJECT_NAME}/install-python.sh
+            ${PROJECT_NAME}/install-python.sh
 
-            bash ${PROJECT_NAME}/done.sh
+            ${PROJECT_NAME}/done.sh
 
             # ls -la /home
             # echo ${HOME}
