@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # load env
-echo ${LOCAL_CACHE_ENV}
-cat ${LOCAL_CACHE_ENV}
-. ${LOCAL_CACHE_ENV}
+echo ${LOCAL_ENV}
+cat ${LOCAL_ENV}
+. ${LOCAL_ENV}
 
 tree -L 2 .
 echo ${PYTHON_VERSION}
