@@ -59,31 +59,42 @@ jobs:
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
-            ls -la /home
-            echo ${HOME}
             export LOCAL_ENV=${HOME}/${LOCAL_ENV}
-            echo ${LOCAL_ENV}
-            touch ${LOCAL_ENV}
-            ls -la
-
-            echo "1:start"
-            ${PROJECT_NAME}/prepare.sh
-            echo "1:done" ${ARTIFACT_OPT}
-            # . ${LOCAL_ENV}
-            echo "1:end1" ${PATH}
-            echo "1:end2" ${ARTIFACT_OPT}
-
-            echo "2:start"
-            cat ${PROJECT_NAME}/setup-pyenv.sh
-            ${PROJECT_NAME}/setup-pyenv.sh
-            ls -la
-            cat ${LOCAL_ENV}
-            ${PROJECT_NAME}/done.sh
+            bash ${PROJECT_NAME}/prepare.sh
             . ${LOCAL_ENV}
-            echo "2:done1" $PATH
-            echo "2:done2" ${ARTIFACT_OPT}
-            pyenv --help
-            echo "2: end"
+
+            bash ${PROJECT_NAME}/setup-pyenv.sh
+            . ${LOCAL_ENV}
+
+            bash ${PROJECT_NAME}/install-python.sh
+
+            bash ${PROJECT_NAME}/done.sh
+
+            # ls -la /home
+            # echo ${HOME}
+            # export LOCAL_ENV=${HOME}/${LOCAL_ENV}
+            # echo ${LOCAL_ENV}
+            # touch ${LOCAL_ENV}
+            # ls -la
+
+            # echo "1:start"
+            # ${PROJECT_NAME}/prepare.sh
+            # echo "1:done" ${ARTIFACT_OPT}
+            # # . ${LOCAL_ENV}
+            # echo "1:end1" ${PATH}
+            # echo "1:end2" ${ARTIFACT_OPT}
+
+            # echo "2:start"
+            # cat ${PROJECT_NAME}/setup-pyenv.sh
+            # ${PROJECT_NAME}/setup-pyenv.sh
+            # ls -la
+            # cat ${LOCAL_ENV}
+            # ${PROJECT_NAME}/done.sh
+            # . ${LOCAL_ENV}
+            # echo "2:done1" $PATH
+            # echo "2:done2" ${ARTIFACT_OPT}
+            # pyenv --help
+            # echo "2: end"
 
             # ${PROJECT_NAME}/install-python.sh
             # echo "3:" ${ARTIFACT_OPT}
