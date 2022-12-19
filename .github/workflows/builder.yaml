@@ -148,7 +148,7 @@ jobs:
         env:
           PROJECT_PACKAGE: openmachine-hextech
           RUN_OS: linux
-          RUN_ARCH: armhf
+          RUN_ARCH: ${{ matrix.arch }}
         run: |
           pwd
           tree -L 2 .
