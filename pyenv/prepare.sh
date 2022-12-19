@@ -1,9 +1,5 @@
 #! /bin/bash
 
-mkdir -p opt
+mkdir -p ${PWD}/opt
 
-echo 'export ARTIFACT_OPT=${PWD}/opt' >> ${LOCAL_ENV}
-
-# echo ${PWD}
-# echo ${WORKDIR}
-# echo ${ARTIFACT_OPT}
+echo 'export ARTIFACT_OPT=${PWD}/opt' >> ${LOCAL_CACHE_ENV}

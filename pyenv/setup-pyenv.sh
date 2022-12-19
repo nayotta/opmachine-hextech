@@ -1,10 +1,5 @@
 #! /bin/bash
 
-echo "a: start"
-echo ${ARTIFACT_OPT}
-echo ${LOCAL_ENV}
-echo "a: end"
-
 # install dependencies
 apt-get update
 apt-get install git curl tree \
@@ -15,7 +10,7 @@ apt-get install git curl tree \
 # install pyenv
 curl https://pyenv.run | bash
 
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ${LOCAL_ENV}
+echo 'export PYENV_ROOT="~/.pyenv"' >> ${LOCAL_ENV}
 echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ${LOCAL_ENV}
 echo 'eval "$(pyenv init -)"' >> ${LOCAL_ENV}
 echo 'eval "$(pyenv virtualenv-init -)"' >> ${LOCAL_ENV}

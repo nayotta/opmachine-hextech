@@ -47,8 +47,7 @@ jobs:
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
         env:
-          HOME: /home/pi
-          LOCAL_ENV: .bashrc
+          LOCAL_CACHE_ENV: /etc/bash.bashrc
           PROJECT_NAME: ${{ matrix.repo_project_name }}/pyenv
           PYTHON_VERSION: ${{ matrix.python_version}}
         with:
@@ -59,19 +58,10 @@ jobs:
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
-            id
-            groups
-            cat /etc/bash.bashrc
-            echo ~/
-            ls -l ~/
-            export LOCAL_ENV=/etc/bash.bashrc
+
             ${PROJECT_NAME}/prepare.sh
-            # . ${LOCAL_ENV}
 
             ${PROJECT_NAME}/setup-pyenv.sh
-            # . ${LOCAL_ENV}
-            cat ${LOCAL_ENV}
-            # exec $SHELL
 
             ${PROJECT_NAME}/install-python.sh
 
