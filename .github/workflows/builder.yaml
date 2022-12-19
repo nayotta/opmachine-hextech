@@ -60,22 +60,28 @@ jobs:
           commands: |
             touch ${LOCAL_ENV}
             ls -la
+
+            echo "1:start"
             ${PROJECT_NAME}/prepare.sh
-            echo "1:start" ${ARTIFACT_OPT}
+            echo "1:done" ${ARTIFACT_OPT}
             . ${LOCAL_ENV}
-            echo "1:" ${ARTIFACT_OPT}
-            echo "2: start"
+            echo "1:end1" $PATH
+            echo "1:end2" ${ARTIFACT_OPT}
+
+            echo "2:start"
             cat ${PROJECT_NAME}/setup-pyenv.sh
             ${PROJECT_NAME}/setup-pyenv.sh
-            . ${LOCAL_ENV}
-            echo "2:" ${ARTIFACT_OPT}
             ls -la
             cat ${LOCAL_ENV}
+            . ${LOCAL_ENV}
+            echo "2:done1" $PATH
+            echo "2:done2" ${ARTIFACT_OPT}
             pyenv --help
             echo "2: end"
-            ${PROJECT_NAME}/install-python.sh
-            echo "3:" ${ARTIFACT_OPT}
-            ${PROJECT_NAME}/done.sh
+
+            # ${PROJECT_NAME}/install-python.sh
+            # echo "3:" ${ARTIFACT_OPT}
+            # ${PROJECT_NAME}/done.sh
 
       - name: Check Artifact
         env:
