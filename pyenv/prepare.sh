@@ -2,9 +2,8 @@
 
 mkdir -p opt
 
-cat << EOF >> ${LOCAL_ENV}
-export ARTIFACT_OPT=${PWD}/opt
-EOF
+echo 'export ARTIFACT_OPT=${PWD}/opt' >> ${LOCAL_ENV}
 
 echo ${PWD}
+echo ${WORKDIR}
 echo ${ARTIFACT_OPT}

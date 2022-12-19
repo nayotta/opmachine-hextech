@@ -11,10 +11,12 @@ apt-get install git curl tree \
 # install pyenv
 curl https://pyenv.run | bash
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ${LOCAL_ENV}
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ${LOCAL_ENV}
+echo 'eval "$(pyenv init -)"' >> ${LOCAL_ENV}
+echo 'eval "$(pyenv virtualenv-init -)"' >> ${LOCAL_ENV}
+
+. ${LOCAL_ENV}
 
 pyenv --help
 
