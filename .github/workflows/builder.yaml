@@ -16,6 +16,10 @@ jobs:
             arm_base_images: raspios_lite:latest
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
+          - arm_cpu: cortex-a7
+            arm_base_images: raspios_lite_arm64:latest
+            python_version: 3.10.7
+            repo_project_name: opmachine-hextech
 
     runs-on: ${{ matrix.distro }}
 
@@ -126,8 +130,8 @@ jobs:
             pyenv versions
 
             # install python
-            pyenv install -v ${PYTHON_VERSION}
-            pyenv versions
+            # pyenv install -v ${PYTHON_VERSION}
+            # pyenv versions
 
             # copy pyenv
             mv ${PYENV_ROOT} ${ARTIFACT_OPT}/pyenv
