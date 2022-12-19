@@ -3,6 +3,12 @@
 # load env
 . ${LOCAL_CACHE_ENV}
 
+tree -L 2 .
+echo ${PYTHON_VERSION}
+echo ${PYENV_ROOT}
+echo ${ARTIFACT_OPT}
+echo $PATH
+
 # # install python
 # pyenv install -v ${PYTHON_VERSION}
 # pyenv which python
@@ -25,9 +31,4 @@
 pyenv --help
 pyenv versions
 
-
-tree -L 2 .
-echo ${PYTHON_VERSION}
-echo ${PYENV_ROOT}
-echo ${ARTIFACT_OPT}
 mv ${PYENV_ROOT} ${ARTIFACT_OPT}/pyenv
