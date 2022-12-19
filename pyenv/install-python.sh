@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. ${LOCAL_ENV}
+# . ${LOCAL_ENV}
 
 # # install python
 # pyenv install -v ${PYTHON_VERSION}

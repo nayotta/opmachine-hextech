@@ -1,5 +1,6 @@
 #! /bin/bash
 
+echo "a: " ${ARTIFACT_OPT}
 
 # install dependencies
 apt-get update

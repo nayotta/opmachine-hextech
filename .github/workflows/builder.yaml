@@ -47,7 +47,7 @@ jobs:
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
         env:
-          LOCAL_ENV: localenv
+          LOCAL_ENV: '${HOME}/.bashrc'
           PROJECT_NAME: ${{ matrix.repo_project_name }}/pyenv
           PYTHON_VERSION: ${{ matrix.python_version}}
         with:
@@ -64,7 +64,7 @@ jobs:
             echo "1:start"
             ${PROJECT_NAME}/prepare.sh
             echo "1:done" ${ARTIFACT_OPT}
-            . ${LOCAL_ENV}
+            # . ${LOCAL_ENV}
             echo "1:end1" ${PATH}
             echo "1:end2" ${ARTIFACT_OPT}
 
@@ -73,6 +73,7 @@ jobs:
             ${PROJECT_NAME}/setup-pyenv.sh
             ls -la
             cat ${LOCAL_ENV}
+            ${PROJECT_NAME}/done.sh
             . ${LOCAL_ENV}
             echo "2:done1" $PATH
             echo "2:done2" ${ARTIFACT_OPT}
