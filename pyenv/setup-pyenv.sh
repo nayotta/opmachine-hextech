@@ -1,6 +1,7 @@
 #! /bin/bash
 
-echo "a: " ${ARTIFACT_OPT}
+echo "a: ${ARTIFACT_OPT}"
+echo "localenv: ${LOCAL_ENV}"
 
 # install dependencies
 apt-get update
