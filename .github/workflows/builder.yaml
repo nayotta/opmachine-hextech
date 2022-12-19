@@ -25,10 +25,10 @@ jobs:
         with:
           path: ${{ matrix.repo_project_name }}
 
-      - uses: little-core-labs/get-git-tag@v3.0.1
+      - uses: little-core-labs/get-git-tag@v3.0.2
         id: tagName
         with:
-          tagRegex: "v(.*)"
+          tagRegex: "(.*)"
 
       # - name: Free Disk
       #   env:
@@ -97,6 +97,7 @@ jobs:
           #   echo "3:" ${ARTIFACT_OPT}
           #   ${PROJECT_NAME}/done.sh
           commands: |
+            # prepare
             mkdir -p ${PWD}/opt
             export ARTIFACT_OPT="${PWD}/opt"
 
@@ -124,6 +125,10 @@ jobs:
             echo $PATH
             pyenv versions
 
+            # install python
+            pyenv install -v ${PYTHON_VERSION}
+            pyenv versions
+
             # copy pyenv
             mv ${PYENV_ROOT} ${ARTIFACT_OPT}/pyenv
 
@@ -137,7 +142,7 @@ jobs:
           pwd
           tree -L 2 .
           TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
-          (cd dist; tar zcvf ../${TAR_NAME} opt)
+          (cd dist; tar zcvf ../${TAR_NAME} opt/pyenv)
           sha1sum ${TAR_NAME} > ${TAR_NAME}.sha1
           tree -L 2 .
 
