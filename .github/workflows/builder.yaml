@@ -11,12 +11,19 @@ jobs:
       matrix:
         distro:
           - ubuntu-20.04
+        arch:
+          - armv7l
+          - aarch64
         include:
-          - arm_cpu: cortex-a7
+          - distro: ubuntu-20.04
+            arch: armv7l
+            arm_cpu: cortex-a7
             arm_base_images: raspios_lite:latest
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
-          - arm_cpu: cortex-a7
+          - distro: ubuntu-20.04
+            arch: aarch64
+            arm_cpu: cortex-a53
             arm_base_images: raspios_lite_arm64:latest
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
