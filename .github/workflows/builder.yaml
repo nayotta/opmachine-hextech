@@ -60,8 +60,10 @@ jobs:
           copy_artifact_dest: dist/opt
           commands: |
             id
-            group
+            groups
             cat /etc/bash.bashrc
+            echo ~/
+            ls -l ~/
             export LOCAL_ENV=${HOME}/${LOCAL_ENV}
             ${PROJECT_NAME}/prepare.sh
             . ${LOCAL_ENV}
