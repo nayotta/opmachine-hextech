@@ -58,6 +58,7 @@ jobs:
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
+            ls -la /home
             export LOCAL_ENV=${HOME}/${LOCAL_ENV}
             echo ${LOCAL_ENV}
             touch ${LOCAL_ENV}
