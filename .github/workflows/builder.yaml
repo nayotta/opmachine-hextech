@@ -67,8 +67,8 @@ jobs:
           base_image: ${{ matrix.arm_base_images}}
           cpu: ${{ matrix.arm_cpu}}
           shell: /bin/bash -eo pipefail
-          copy_artifact_path: opt
-          copy_artifact_dest: dist/opt
+          copy_artifact_path: opt/pyenv
+          copy_artifact_dest: dist/pyenv
           # commands: |
           #   # ${PROJECT_NAME}/prepare.sh
 
@@ -153,7 +153,6 @@ jobs:
           pwd
           tree -L 2 .
           TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
-          mv dist/opt/pyenv dist/
           (cd dist; tar zcvf ../${TAR_NAME} pyenv)
           sha1sum ${TAR_NAME} > ${TAR_NAME}.sha1
           tree -L 2 .
