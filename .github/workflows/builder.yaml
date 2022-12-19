@@ -54,7 +54,7 @@ jobs:
           image_additional_mb: 1024
           base_image: ${{ matrix.arm_base_images}}
           cpu: ${{ matrix.arm_cpu}}
-          shell: /bin/bash
+          shell: /bin/bash -eo pipefail
           copy_artifact_path: opt
           copy_artifact_dest: dist/opt
           commands: |
@@ -64,18 +64,18 @@ jobs:
             echo "1:start" ${ARTIFACT_OPT}
             . ${LOCAL_ENV}
             echo "1:" ${ARTIFACT_OPT}
-            # echo "2: start"
-            # cat ${PROJECT_NAME}/setup-pyenv.sh
-            # ${PROJECT_NAME}/setup-pyenv.sh
-            # . ${LOCAL_ENV}
-            # echo "2:" ${ARTIFACT_OPT}
-            # ls -la
-            # cat ${LOCAL_ENV}
-            # pyenv --help
-            # echo "2: end"
-            # ${PROJECT_NAME}/install-python.sh
-            # echo "3:" ${ARTIFACT_OPT}
-            # ${PROJECT_NAME}/done.sh
+            echo "2: start"
+            cat ${PROJECT_NAME}/setup-pyenv.sh
+            ${PROJECT_NAME}/setup-pyenv.sh
+            . ${LOCAL_ENV}
+            echo "2:" ${ARTIFACT_OPT}
+            ls -la
+            cat ${LOCAL_ENV}
+            pyenv --help
+            echo "2: end"
+            ${PROJECT_NAME}/install-python.sh
+            echo "3:" ${ARTIFACT_OPT}
+            ${PROJECT_NAME}/done.sh
 
       - name: Check Artifact
         env:
