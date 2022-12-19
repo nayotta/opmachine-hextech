@@ -78,7 +78,7 @@ jobs:
             echo "1:start"
             ${PROJECT_NAME}/prepare.sh
             echo "1:done" ${ARTIFACT_OPT}
-            # . ${LOCAL_ENV}
+            . ${LOCAL_ENV}
             echo "1:end1" ${PATH}
             echo "1:end2" ${ARTIFACT_OPT}
 
