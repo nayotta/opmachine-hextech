@@ -19,9 +19,10 @@ jobs:
             arch: armv7l
             arm_cpu: cortex-a7
             arm_base_images: raspios_lite:latest
+            arm_image_additional_mb: 2048
             python_version: 3.10.7
-            repo_project_name: openmachine-hextech
-            repo_download_tag: pyenv-v0.1.0-beta.1
+            repo_project_name: opmachine-hextech
+            repo_download_tag: pyenv-v0.2.0-beta.1
           # - distro: ubuntu-20.04
           #   arch: aarch64
           #   arm_cpu: cortex-a53
@@ -65,28 +66,28 @@ jobs:
         uses: pguyot/arm-runner-action@v2
         env:
           PYENV_TAR: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_tag}}_linux_${{ matrix.arch}}.tar.gz
-          PROJECT_NAME: ${{ matrix.repo_project_name }}/pyenv
+          PROJECT_NAME: ${{ matrix.repo_project_name }}/inspect-slide-rest
           PYTHON_VERSION: ${{ matrix.python_version}}
         with:
-          image_additional_mb: 1024
+          image_additional_mb: ${{ matrix.arm_image_additional_mb}}
           base_image: ${{ matrix.arm_base_images}}
           cpu: ${{ matrix.arm_cpu}}
           shell: /bin/bash -eo pipefail
-          copy_artifact_path: opt/pyvenv
-          copy_artifact_dest: dist/pyvenv
+          copy_artifact_path: opt/venv
+          copy_artifact_dest: dist/venv
           commands: |
             # prepare
             mkdir -p ${HOME}
             mkdir -p ${PWD}/opt
             export ARTIFACT_OPT="${PWD}/opt"
 
-            # install dependencies
+            # install dependencies to build python, lxml, etc..
             apt-get update
             apt-get install tree -y
-            # apt-get install git curl tree \
-            #   build-essential zlib1g-dev libffi-dev libssl-dev \
-            #   libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev \
-            #   libxml2-dev libxmlsec1-dev libxslt-dev -y
+            apt-get install git curl \
+              build-essential zlib1g-dev libffi-dev libssl-dev \
+              libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev \
+              libxml2-dev libxmlsec1-dev libxslt-dev -y
 
             # install pyenv
             (cd downloads; tar -zxf ${PYENV_TAR})
@@ -109,14 +110,14 @@ jobs:
             pyenv versions
 
             # install python dependencies
-            (pyenv shell ${PYTHON_VERSION}; python3 -m venv pyvenv)
-            . pyvenv/bin/activate
-            # pip install sanic
-            pip install websockets
-            (cd pyvenv; rm -rf bin include)
+            (pyenv shell ${PYTHON_VERSION}; python3 -m venv venv)
+            . venv/bin/activate
+            pyenv which python
+            (cd ${PROJECT_NAME}; pip install -r requirements.txt)
+            (cd venv; rm -rf bin include)
 
             # move dependencies
-            mv pyvenv opt/pyvenv
+            mv venv opt/venv
 
       - name: Check Artifact
         env:
@@ -127,7 +128,7 @@ jobs:
           pwd
           tree -L 2 .
           TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
-          (cd dist; tar zcvf ../${TAR_NAME} pyvenv)
+          (cd dist; tar zcvf ../${TAR_NAME} venv)
           sha1sum ${TAR_NAME} > ${TAR_NAME}.sha1
           tree -L 2 .
 
