@@ -111,7 +111,8 @@ jobs:
             # install python dependencies
             (pyenv shell ${PYTHON_VERSION}; python3 -m venv pyvenv)
             . pyvenv/bin/activate
-            pip install sanic
+            # pip install sanic
+            pip install websockets
             (cd pyvenv; rm -rf bin include)
 
             # move dependencies
