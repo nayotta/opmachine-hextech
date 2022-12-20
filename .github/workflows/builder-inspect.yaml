@@ -76,6 +76,7 @@ jobs:
           copy_artifact_dest: dist/pkg
           commands: |
             # prepare
+            mkdir -p ${HOME}
             mkdir -p ${PWD}/opt
             export ARTIFACT_OPT="${PWD}/opt"
 
