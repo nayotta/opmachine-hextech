@@ -20,7 +20,7 @@ jobs:
             arm_cpu: cortex-a7
             arm_base_images: raspios_lite:latest
             python_version: 3.10.7
-            repo_project_name: opmachine-hextech
+            repo_project_name: openmachine-hextech
             repo_download_tag: pyenv-v0.1.0-beta.1
           # - distro: ubuntu-20.04
           #   arch: aarch64
@@ -113,7 +113,7 @@ jobs:
 
       - name: Check Artifact
         env:
-          PROJECT_PACKAGE: openmachine-hextech
+          PROJECT_PACKAGE: ${{ matrix.repo_project_name}}
           RUN_OS: linux
           RUN_ARCH: ${{ matrix.arch }}
         run: |
