@@ -47,18 +47,19 @@ jobs:
         with:
           tag: ${{ matrix.repo_download_tag}}
           fileName: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_tag}}_linux_${{ matrix.arch}}.tar.gz
-          tarBall: true
+          # tarBall: true
 
       - name: Prepare
+        env:
+          PYENV_TAR: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_tag}}_linux_${{ matrix.arch}}.tar.gz
         run: |
           sudo apt update
           sudo apt install tree -y
           mkdir -p dist
           mkdir -p downloads
+          mv ${PYENV_TAR} downloads/
           pwd
           tree -L 2 .
-
-          mv *.tar.gz downloads/
 
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
@@ -79,14 +80,18 @@ jobs:
             export ARTIFACT_OPT="${PWD}/opt"
 
             # install dependencies
-            # apt-get update
+            apt-get update
+            apt-get install tree -y
             # apt-get install git curl tree \
             #   build-essential zlib1g-dev libffi-dev libssl-dev \
             #   libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev \
             #   libxml2-dev libxmlsec1-dev libxslt-dev -y
 
             # install pyenv
-            (cd downloads; tar -zxvf ${PYENV_TAR}; mv pyenv $HOME/.pyenv)
+            (cd downloads; tar -zxvf ${PYENV_TAR})
+            tree -L 2 .
+            tree -L 2 $HOME/
+            mv downloads/pyenv $HOME/.pyenv
 
             # set env
             export PYENV_ROOT="$HOME/.pyenv"
