@@ -23,12 +23,14 @@ jobs:
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
             repo_download_tag: pyenv-v0.2.0-beta.1
-          # - distro: ubuntu-20.04
-          #   arch: aarch64
-          #   arm_cpu: cortex-a53
-          #   arm_base_images: raspios_lite_arm64:latest
-          #   python_version: 3.10.7
-          #   repo_project_name: opmachine-hextech
+          - distro: ubuntu-20.04
+            arch: aarch64
+            arm_cpu: cortex-a53
+            arm_base_images: raspios_lite_arm64:latest
+            arm_image_additional_mb: 2048
+            python_version: 3.10.7
+            repo_project_name: opmachine-hextech
+            repo_download_tag: pyenv-v0.2.0-beta.1
 
     runs-on: ${{ matrix.distro }}
 
