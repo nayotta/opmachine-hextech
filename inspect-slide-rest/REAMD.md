@@ -12,3 +12,4 @@ apt-get install rpi.gpio
 
 > 参考
 > * https://lxml.de/installation.html
+> * https://github.com/mhausenblas/mkdocs-deploy-gh-pages/issues/76
