@@ -13,7 +13,7 @@ jobs:
           - ubuntu-20.04
         arch:
           - armv7l
-          # - aarch64
+          - aarch64
         include:
           - distro: ubuntu-20.04
             arch: armv7l
@@ -116,6 +116,9 @@ jobs:
             . venv/bin/activate
             pyenv which python
             (cd ${PROJECT_NAME}; pip install -r requirements.txt)
+            # remove init package
+            pip uninstall setuptools pip -y
+            deactivate
             (cd venv; rm -rf bin include)
 
             # move dependencies
