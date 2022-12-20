@@ -13,7 +13,7 @@ jobs:
           - ubuntu-20.04
         arch:
           - armv7l
-          - aarch64
+          # - aarch64
         include:
           - distro: ubuntu-20.04
             arch: armv7l
@@ -45,7 +45,6 @@ jobs:
       - name: Download Pyenv
         uses: robinraju/release-downloader@v1.6
         with:
-          latest: true
           tag: ${{ matrix.repo_download_tag}}
           fileName: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_tag}}_linux_${{ matrix.arch}}.tar.gz
           tarBall: true
