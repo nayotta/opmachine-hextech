@@ -72,8 +72,8 @@ jobs:
           base_image: ${{ matrix.arm_base_images}}
           cpu: ${{ matrix.arm_cpu}}
           shell: /bin/bash -eo pipefail
-          copy_artifact_path: opt/pkg
-          copy_artifact_dest: dist/pkg
+          copy_artifact_path: opt/pyvenv
+          copy_artifact_dest: dist/pyvenv
           commands: |
             # prepare
             mkdir -p ${HOME}
@@ -116,7 +116,7 @@ jobs:
             (cd pyvenv; rm -rf bin include)
 
             # move dependencies
-            mv pyvenv opt/pkg
+            mv pyvenv opt/pyvenv
 
       - name: Check Artifact
         env:
