@@ -89,7 +89,7 @@ jobs:
             #   libxml2-dev libxmlsec1-dev libxslt-dev -y
 
             # install pyenv
-            (cd downloads; tar -zxvf ${PYENV_TAR})
+            (cd downloads; tar -zxf ${PYENV_TAR})
             tree -L 2 .
             tree -L 2 $HOME/
             mv downloads/pyenv $HOME/.pyenv
