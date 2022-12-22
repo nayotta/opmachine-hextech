@@ -41,3 +41,6 @@ docker run -d --restart always --name inspect-slide-reset-mixer -p 10980:8000 -v
 curl -X POST http://127.0.0.1:10980/
 
 ```
+
+* 树莓派端口转发
+  * 参考：https://jkboy.com/archives/5114.html
