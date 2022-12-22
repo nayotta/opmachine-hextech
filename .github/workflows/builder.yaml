@@ -9,22 +9,37 @@ jobs:
   compile-arm-and-upload-asset:
     strategy:
       matrix:
-        distro:
-          - ubuntu-20.04
-        arch:
-          - armv7l
-          - aarch64
         include:
           - distro: ubuntu-20.04
-            arch: armv7l
-            arm_cpu: cortex-a7
-            arm_base_images: raspios_lite:latest
+            arm_vm_runner:
+              arch: armv7l
+              cpu: cortex-a7
+              image_additional_mb: 1024
+              base_images: https://downloads.raspberrypi.org/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2022-09-26/2022-09-22-raspios-buster-armhf-lite.img.xz
+              distro: debian
+              distro_codename: buster
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
+
           - distro: ubuntu-20.04
-            arch: aarch64
-            arm_cpu: cortex-a53
-            arm_base_images: raspios_lite_arm64:latest
+            arm_vm_runner:
+              arch: armv7l
+              cpu: cortex-a7
+              image_additional_mb: 1024
+              base_images: raspios_lite:latest
+              distro: debian
+              distro_codename: bullseye
+            python_version: 3.10.7
+            repo_project_name: opmachine-hextech
+
+          - distro: ubuntu-20.04
+            arm_vm_runner:
+              arch: aarch64
+              cpu: cortex-a53
+              image_additional_mb: 1024
+              base_images: raspios_lite_arm64:latest
+              distro: debian
+              distro_codename: bullseye
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
 
@@ -63,9 +78,9 @@ jobs:
           PROJECT_NAME: ${{ matrix.repo_project_name }}/pyenv
           PYTHON_VERSION: ${{ matrix.python_version}}
         with:
-          image_additional_mb: 1024
-          base_image: ${{ matrix.arm_base_images}}
-          cpu: ${{ matrix.arm_cpu}}
+          image_additional_mb: ${{ matrix.arm_vm_runner.image_additional_mb }}
+          base_image: ${{ matrix.arm_vm_runner.base_images }}
+          cpu: ${{ matrix.arm_vm_runner.cpu}}
           shell: /bin/bash -eo pipefail
           copy_artifact_path: opt/pyenv
           copy_artifact_dest: dist/pyenv
@@ -111,6 +126,9 @@ jobs:
             # prepare
             mkdir -p ${PWD}/opt
             export ARTIFACT_OPT="${PWD}/opt"
+            cat /etc/issue
+            cat /etc/os-release
+            uname -a
 
             # install dependencies
             apt-get update
@@ -146,13 +164,15 @@ jobs:
 
       - name: Check Artifact
         env:
-          PROJECT_PACKAGE: openmachine-hextech
-          RUN_OS: linux
-          RUN_ARCH: ${{ matrix.arch }}
+          PROJECT_PACKAGE: ${{ matrix.repo_project_name }}
+          RUN_PKG_NAME: pyenv
+          RUN_PYTHON_VERSION: cp-${{ matrix.python_version }}
+          RUN_OS: ${{ matrix.arm_vm_runner.distro_codename }}
+          RUN_ARCH: ${{ matrix.arm_vm_runner.arch }}
         run: |
           pwd
           tree -L 2 .
-          TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
+          TAR_NAME="${PROJECT_PACKAGE}_${RUN_PKG_NAME}_${RUN_PYTHON_VERSION}_${RUN_OS}_${RUN_ARCH}.tar.gz"
           (cd dist; tar zcvf ../${TAR_NAME} pyenv)
           sha1sum ${TAR_NAME} > ${TAR_NAME}.sha1
           tree -L 2 .
