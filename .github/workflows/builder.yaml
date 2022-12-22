@@ -24,7 +24,7 @@ jobs:
           - distro: ubuntu-20.04
             arch: armv7l
             arm_cpu: cortex-a7
-            arm_base_images: raspbian_lite:latest
+            arm_base_images: https://downloads.raspberrypi.org/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2022-09-26/2022-09-22-raspios-buster-armhf-lite.img.xz
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
           # - distro: ubuntu-20.04
