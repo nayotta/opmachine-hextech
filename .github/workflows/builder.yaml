@@ -155,7 +155,7 @@ jobs:
             pyenv versions
 
             # install python
-            # pyenv install -v ${PYTHON_VERSION}
+            pyenv install -v ${PYTHON_VERSION}
             pyenv versions
 
             # copy pyenv
@@ -165,7 +165,7 @@ jobs:
       - name: Check Artifact
         env:
           PROJECT_PACKAGE: ${{ matrix.repo_project_name }}
-          RUN_PKG_NAME: pyenv-${GIT_TAG_NAME}
+          RUN_PKG_NAME: pyenv
           RUN_PYTHON_VERSION: cp-${{ matrix.python_version }}
           RUN_OS: ${{ matrix.arm_vm_runner.distro_codename }}
           RUN_ARCH: ${{ matrix.arm_vm_runner.arch }}
