@@ -9,28 +9,45 @@ jobs:
   compile-arm-and-upload-asset:
     strategy:
       matrix:
-        distro:
-          - ubuntu-20.04
-        arch:
-          - armv7l
-          - aarch64
         include:
           - distro: ubuntu-20.04
-            arch: armv7l
-            arm_cpu: cortex-a7
-            arm_base_images: raspios_lite:latest
-            arm_image_additional_mb: 2048
+            arm_vm_runner:
+              arch: armv7l
+              cpu: cortex-a7
+              base_images: https://downloads.raspberrypi.org/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2022-09-26/2022-09-22-raspios-buster-armhf-lite.img.xz
+              image_additional_mb: 2048
+              distro: debian
+              distro_codename: buster
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
-            repo_download_tag: pyenv-v0.2.0-beta.1
+            repo_download_tag: pyenv-v0.3.0-beta.1
+            repo_download_pkg_name: pyenv_cp-3.10.7
+
           - distro: ubuntu-20.04
-            arch: aarch64
-            arm_cpu: cortex-a53
-            arm_base_images: raspios_lite_arm64:latest
-            arm_image_additional_mb: 2048
+            arm_vm_runner:
+              arch: armv7l
+              cpu: cortex-a7
+              base_images: raspios_lite:latest
+              image_additional_mb: 2048
+              distro: debian
+              distro_codename: bullseye
             python_version: 3.10.7
             repo_project_name: opmachine-hextech
-            repo_download_tag: pyenv-v0.2.0-beta.1
+            repo_download_tag: pyenv-v0.3.0-beta.1
+            repo_download_pkg_name: pyenv_cp-3.10.7
+
+          - distro: ubuntu-20.04
+            arm_vm_runner:
+              arch: aarch64
+              cpu: cortex-a53
+              base_images: raspios_lite_arm64:latest
+              image_additional_mb: 2048
+              distro: debian
+              distro_codename: bullseye
+            python_version: 3.10.7
+            repo_project_name: opmachine-hextech
+            repo_download_tag: pyenv-v0.3.0-beta.1
+            repo_download_pkg_name: pyenv_cp-3.10.7
 
     runs-on: ${{ matrix.distro }}
 
@@ -48,13 +65,12 @@ jobs:
       - name: Download Pyenv
         uses: robinraju/release-downloader@v1.6
         with:
-          tag: ${{ matrix.repo_download_tag}}
-          fileName: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_tag}}_linux_${{ matrix.arch}}.tar.gz
-          # tarBall: true
+          tag: ${{ matrix.repo_download_tag }}
+          fileName: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_pkg_name }}_${{ matrix.arm_vm_runner.distro_codename }}_${{ matrix.arm_vm_runner.arch }}.tar.gz
 
       - name: Prepare
         env:
-          PYENV_TAR: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_tag}}_linux_${{ matrix.arch}}.tar.gz
+          PYENV_TAR: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_pkg_name }}_${{ matrix.arm_vm_runner.distro_codename }}_${{ matrix.arm_vm_runner.arch }}.tar.gz
         run: |
           sudo apt update
           sudo apt install tree -y
@@ -67,13 +83,13 @@ jobs:
       - name: Build Arm
         uses: pguyot/arm-runner-action@v2
         env:
-          PYENV_TAR: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_tag}}_linux_${{ matrix.arch}}.tar.gz
+          PYENV_TAR: ${{ matrix.repo_project_name }}_${{ matrix.repo_download_pkg_name }}_${{ matrix.arm_vm_runner.distro_codename }}_${{ matrix.arm_vm_runner.arch }}.tar.gz
           PROJECT_NAME: ${{ matrix.repo_project_name }}/inspect-slide-rest
-          PYTHON_VERSION: ${{ matrix.python_version}}
+          PYTHON_VERSION: ${{ matrix.python_version }}
         with:
-          image_additional_mb: ${{ matrix.arm_image_additional_mb}}
-          base_image: ${{ matrix.arm_base_images}}
-          cpu: ${{ matrix.arm_cpu}}
+          image_additional_mb: ${{ matrix.arm_vm_runner.image_additional_mb }}
+          base_image: ${{ matrix.arm_vm_runner.base_images}}
+          cpu: ${{ matrix.arm_vm_runner.cpu}}
           shell: /bin/bash -eo pipefail
           copy_artifact_path: opt/venv
           copy_artifact_dest: dist/venv
@@ -126,13 +142,14 @@ jobs:
 
       - name: Check Artifact
         env:
-          PROJECT_PACKAGE: ${{ matrix.repo_project_name}}
-          RUN_OS: linux
-          RUN_ARCH: ${{ matrix.arch }}
+          PROJECT_PACKAGE: ${{ matrix.repo_project_name }}
+          RUN_PKG_NAME: inspect-dev-cp-${{ matrix.python_version }}
+          RUN_OS: ${{ matrix.arm_vm_runner.distro_codename }}
+          RUN_ARCH: ${{ matrix.arm_vm_runner.arch }}
         run: |
           pwd
           tree -L 2 .
-          TAR_NAME="${PROJECT_PACKAGE}_${GIT_TAG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
+          TAR_NAME="${PROJECT_PACKAGE}_${RUN_PKG_NAME}_${RUN_OS}_${RUN_ARCH}.tar.gz"
           (cd dist; tar zcvf ../${TAR_NAME} venv)
           sha1sum ${TAR_NAME} > ${TAR_NAME}.sha1
           tree -L 2 .
