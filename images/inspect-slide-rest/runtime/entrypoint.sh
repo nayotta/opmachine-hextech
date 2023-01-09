@@ -20,7 +20,7 @@ while sleep 20; do
         PROCESS_1_STATUS=$?
         ps aux |grep metathings |grep module |grep -q -v grep
         PROCESS_2_STATUS=$?
-        # ps aux |grep python |grep run |grep -q -v grep
+        ps aux |grep python |grep run |grep -q -v grep
         PROCESS_3_STATUS=$?
         # If the greps above find anything, they exit with 0 status
         # If they are not both 0, then something is wrong
