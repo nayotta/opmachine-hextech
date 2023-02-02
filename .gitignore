@@ -8,5 +8,4 @@ images/inspect-slide-rest/runtime/meta/config/device.yaml
 images/inspect-slide-rest/runtime/meta/config/module.yaml
 images/inspect-slide-rest/runtime/html
 images/inspect-slide-rest/runtime/cruiser-admin-web
-isr/runtime-apply/
 *.copy
