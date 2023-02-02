@@ -7,6 +7,6 @@
 
 ```shell
 # build
-docker builde -t ghcr.io/nayotta/op-hextech-python:3.10.7-slim
+docker build -t ghcr.io/nayotta/op-hextech-python:3.10.7-slim .
 ```
 

@@ -2,7 +2,7 @@ FROM python:3.10.7-slim
 
 LABEL org.opencontainers.image.authors="https://github.com/nayotta" \
       org.opencontainers.image.ref.name="3.10.7-slim" \
-      org.opencontainers.image.source="https://github.com/nayotta/opmachine-hextech"
+      org.opencontainers.image.source="https://github.com/nayotta/opmachine-hextech" \
       org.opencontainers.image.title="python" \
       org.opencontainers.image.version="3.10.7"
 
