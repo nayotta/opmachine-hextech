@@ -1,0 +1,15 @@
+[Unit]
+Description=Inspect Isr Camera
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=cloud
+WorkingDirectory=/home/cloud
+ExecStart=/home/cloud/workspaces/inspect-slide-rest/runtime/bin/start-isr-camera.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
