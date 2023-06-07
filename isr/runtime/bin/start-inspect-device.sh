@@ -1,3 +1,5 @@
 #! /bin/bash
 
-MT_STAGE=prod /home/cloud/workspaces/inspect-slide-rest/runtime/bin/metathings.amd64.linux device run --config /home/cloud/workspaces/inspect-slide-rest/runtime/etc/meta/device.yaml
+export APP_WORKDIR=/home/cloud/workspaces/isr/runtime
+
+MT_STAGE=prod ${APP_WORKDIR}/bin/metathings.amd64.linux device run --config ${APP_WORKDIR}/etc/meta/device.yaml

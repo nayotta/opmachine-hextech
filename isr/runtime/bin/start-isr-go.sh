@@ -1,4 +1,5 @@
 #! /bin/bash
 
-export APP_CONFIG=/home/cloud/workspaces/inspect-slide-rest/runtime/etc/isr-go/config.yaml
-/home/cloud/workspaces/inspect-slide-rest/runtime/bin/isr-go.amd64.linux
+export APP_WORKDIR=/home/cloud/workspaces/isr/runtime
+export APP_CONFIG=${APP_WORKDIR}/etc/isr-go/config.yaml
+${APP_WORKDIR}/bin/isr-go.amd64.linux
